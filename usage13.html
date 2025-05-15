@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Palladium Usage Report
+    </title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src=".tmp/.data13.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart', 'controls']});
+      google.charts.setOnLoadCallback(drawUsageByUser);
+
+      function drawUsageByUser() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Week');
+        data.addColumn({type:'string', label: 'System', role:'annotation'});
+        data.addColumn({type:'string', label: 'Month', role:'annotation'});
+        for (i = 0; i < numUser; i++)
+		data.addColumn('number', user[i]);
+	data.addRows(rowData); 
+
+        var systemPicker = new google.visualization.ControlWrapper({
+          'controlType': 'CategoryFilter',
+          'containerId': 'control1',
+          'options': {
+            'filterColumnLabel' : 'System',
+            'ui': {
+              'labelStacking': 'horizontal',
+              'allowTyping': true,
+              'allowMultiple': false
+            }
+          },
+          'state': { 'selectedValues': defaultSystem }
+        });
+
+        var monthPicker = new google.visualization.ControlWrapper({
+          'controlType': 'CategoryFilter',
+          'containerId': 'control2',
+          'options': {
+            'filterColumnLabel' : 'Month',
+            'ui': {
+              'labelStacking': 'horizontal',
+              'allowTyping': true,
+              'allowMultiple': false
+            }
+          },
+          'state': { 'selectedValues': defaultMonth }
+        });
+
+        var chart = new google.visualization.ChartWrapper({
+          'chartType': 'ColumnChart',
+          'containerId': 'chart_div',
+          'options': {
+            'height': 600,
+            'isStacked': true,
+            'vAxis': {title: "Number of Jobs PerWeek", maxValue: 100, minValue: 0},
+            'hAxis': {title: "Week"}
+          }        
+        });
+
+        var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard'));
+                        
+        dashboard.bind([systemPicker, monthPicker], chart).draw(data);
+      }
+
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+        <h1>Palladium Weekly Number of Jobs By Users</h1>
+        <div id='dateInfo'> </div>
+  	<script type="text/javascript">
+  		var str1 = "<h2>Date: " + dateStr + "</h2>";
+  		var str2 = "<h3>System Info: " + machineList + "</h3>";
+		document.getElementById('dateInfo').innerHTML = str1 + " " + str2;
+	</script>
+        <div id="dashboard"></div>
+        <div id="control1"></div>
+        <h5>   </h5>
+        <div id="control2"></div>
+        <div id="chart_div"></div>
+	<h1><a href="main.html">Main Page</a></h1>
+  </body>
+</html>
