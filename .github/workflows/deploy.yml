@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v4
+        with:
+          path: 'my-repo-checkout' # Checkout to a specific directory
 
       - name: Setup Pages
         id: pages
@@ -18,14 +20,18 @@ jobs:
 
       - name: Build and Copy Files (including hidden ones)
         run: |
-          # Create a temporary directory for your build output
+          # Create the temporary output directory OUTSIDE the checked-out repo
           mkdir _site_output
-          # Copy all files from your repo root to _site_output,
+
+          # Copy all files from the checked-out repository root to _site_output,
           # including dotfiles and directories.
-          # The `shopt -s dotglob` is crucial for copying dotfiles.
-          shopt -s dotglob
-          cp -r * _site_output/
-          shopt -u dotglob # Turn off dotglob after use
+          # Use `shopt -s dotglob` within the source directory before copying.
+
+          cd my-repo-checkout # Change to the checked-out repo directory
+          shopt -s dotglob    # Enable dotglob to include dotfiles
+          cp -r * ../_site_output/ # Copy all contents to the parent _site_output
+          shopt -u dotglob    # Turn off dotglob
+          cd .. # Change back to the parent directory where _site_output is
 
           # Optional: Verify content of _site_output
           ls -la _site_output/
