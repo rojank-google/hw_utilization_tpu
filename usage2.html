@@ -20,7 +20,8 @@
 		data.addColumn('number', 'NightTime');
 		data.addColumn('number', 'WeekDay');
 		data.addColumn('number', 'WeekEnd');
-		data.addRows(systemUsageData); 
+		data.addColumn('number', 'IntervalWeekDay');
+	      	data.addRows(systemUsageData); 
 
         var systemPicker = new google.visualization.ControlWrapper({
           'controlType': 'CategoryFilter',
