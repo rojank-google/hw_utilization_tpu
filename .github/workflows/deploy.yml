@@ -12,7 +12,7 @@ jobs:
       - name: Checkout your repository
         uses: actions/checkout@v4
         with:
-          path: 'my-repo-checkout' # Checkout to a specific directory
+          path: 'my-repo-checkout'
 
       - name: Setup Pages
         id: pages
@@ -20,26 +20,18 @@ jobs:
 
       - name: Build and Copy Files (including hidden ones)
         run: |
-          # Create the temporary output directory OUTSIDE the checked-out repo
           mkdir _site_output
-
-          # Copy all files from the checked-out repository root to _site_output,
-          # including dotfiles and directories.
-          # Use `shopt -s dotglob` within the source directory before copying.
-
-          cd my-repo-checkout # Change to the checked-out repo directory
-          shopt -s dotglob    # Enable dotglob to include dotfiles
-          cp -r * ../_site_output/ # Copy all contents to the parent _site_output
-          shopt -u dotglob    # Turn off dotglob
-          cd .. # Change back to the parent directory where _site_output is
-
-          # Optional: Verify content of _site_output
+          cd my-repo-checkout
+          shopt -s dotglob
+          cp -r * ../_site_output/
+          shopt -u dotglob
+          cd ..
           ls -la _site_output/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_site_output' # The directory that contains your site's static files
+          path: '_site_output'
 
   deploy:
     environment:
@@ -47,6 +39,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    # --- ADD THESE PERMISSIONS ---
+    permissions:
+      pages: write       # Grants write permission to the GITHUB_TOKEN for GitHub Pages deployment
+      id-token: write    # Grants write permission to the GITHUB_TOKEN for OIDC token issuance
+    # -----------------------------
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
