@@ -1,0 +1,47 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # or your default branch, e.g., master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build and Copy Files (including hidden ones)
+        run: |
+          # Create a temporary directory for your build output
+          mkdir _site_output
+          # Copy all files from your repo root to _site_output,
+          # including dotfiles and directories.
+          # The `shopt -s dotglob` is crucial for copying dotfiles.
+          shopt -s dotglob
+          cp -r * _site_output/
+          shopt -u dotglob # Turn off dotglob after use
+
+          # Optional: Verify content of _site_output
+          ls -la _site_output/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site_output' # The directory that contains your site's static files
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
