@@ -45,7 +45,8 @@ echo "Current working directory: $(pwd)"
 # run xeGenReport for the last 3 months for CCA, CCD, CCH (Z1)
 
 
-
+# update index.html of webpage
+#source /home/rojank/hw_utilization_tpu/update_index.sh
 
 
 # push contents to GitHub website
