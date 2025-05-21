@@ -19,7 +19,7 @@ MAIN_HTML_INSERT_BEFORE_TAG='</body></html>'
 
 
 # Determine the web path for index.html.
-INDEX_WEB_PATH="/index.html" # <--- IMPORTANT: Verify this for your index.html location!
+INDEX_WEB_PATH="/hw_utilization_tpu" # <--- IMPORTANT: Verify this for your index.html location!
 # -------------------
 
 echo "Starting index.html configuration script..."
