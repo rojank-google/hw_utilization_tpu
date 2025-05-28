@@ -43,7 +43,9 @@ fi
 echo "Current working directory: $(pwd)"
 
 # run xeGenReport for the last 3 months for CCA, CCD, CCH (Z1)
-
+# if z1, run CCA, CCD, CCH
+# if z2, run CCL
+# if z3, run Z3 machines
 
 # update index.html of webpage
 #source /home/rojank/hw_utilization_tpu/update_index.sh
