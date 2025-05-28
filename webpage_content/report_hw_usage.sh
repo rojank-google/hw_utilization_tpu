@@ -71,14 +71,14 @@ echo "Current working directory: $(pwd)"
 cd z1
 z1_handle_dir
 # call xeGenReport for z1
-echo xeGenReport -host cca-emu ccd-emu cch-emu -period $end_date $start_date -passKey cadencepxp
+xeGenReport -host cca-emu ccd-emu cch-emu -period $end_date $start_date -passKey cadencepxp
 cd ..
 
 # SECOND z2, run CCL
 cd z2
 z2_handle_dir
 # call xeGenReport for z2
-echo xeGenReport -host ccl-emu -period $end_date $start_date -passKey cadencepxp
+xeGenReport -host ccl-emu -period $end_date $start_date -passKey cadencepxp
 cd ..
 
 # THIRD z3, run Z3 machines

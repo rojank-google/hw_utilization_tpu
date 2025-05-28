@@ -1,0 +1,164 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Palladium Usage Report
+    </title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src=".tmp/.data9.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart', 'controls']});
+      google.charts.setOnLoadCallback(drawUsageByDesign);
+
+      function drawUsageByDesign() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Week');
+        data.addColumn({type:'string', label: 'System', role:'annotation'});
+        data.addColumn({type:'string', label: 'Month', role:'annotation'});
+	for (i = 0; i < numDesign; i++)
+		data.addColumn('number',designName[i]);
+	data.addRows(rowData);	
+        
+        var systemPicker = new google.visualization.ControlWrapper({
+          'controlType': 'CategoryFilter',
+          'containerId': 'control1',
+          'options': {
+            'filterColumnLabel' : 'System',
+            'ui': {
+              'labelStacking': 'horizontal',
+              'allowTyping': true,
+              'allowMultiple': false
+            }
+          },
+          'state': { 'selectedValues': defaultSystem }
+        });
+   
+        var monthPicker = new google.visualization.ControlWrapper({
+          'controlType': 'CategoryFilter',
+          'containerId': 'control2',
+          'options': {
+            'filterColumnLabel' : 'Month',
+            'ui': {
+              'labelStacking': 'horizontal',
+              'allowTyping': true,
+              'allowMultiple': false
+            }
+          },
+          'state': { 'selectedValues': defaultMonth }
+        });
+
+        var chart = new google.visualization.ChartWrapper({
+          'chartType': 'ColumnChart',
+          'containerId': 'chart_div',
+          'options': {
+            'height': 600,
+            'isStacked': true,
+            'vAxis': {title: "Percentage Used(Time)", maxValue: 100, minValue: 0},
+            'hAxis': {title: "Week"}
+          }        
+        });
+
+        var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard'));
+                        
+        dashboard.bind([systemPicker, monthPicker], chart).draw(data);
+
+
+
+        // Create and populate the data2 table.
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('string', 'WeekDay');
+        data2.addColumn({type:'string', label: 'System', role:'annotation'});
+        data2.addColumn({type:'string', label: 'Month', role:'annotation'});
+        data2.addColumn({type:'string', label: 'Week', role:'annotation'});
+        
+	for (i = 0; i < numDesign; i++)
+		data2.addColumn('number',designName[i]);
+	data2.addRows(rowData2);	
+        
+        var systemPicker2 = new google.visualization.ControlWrapper({
+          'controlType': 'CategoryFilter',
+          'containerId': 'control3',
+          'options': {
+            'filterColumnLabel' : 'System',
+            'ui': {
+              'labelStacking': 'horizontal',
+              'allowTyping': true,
+              'allowMultiple': false
+            }
+          },
+          'state': { 'selectedValues': defaultSystem }
+        });
+   
+        var monthPicker2 = new google.visualization.ControlWrapper({
+          'controlType': 'CategoryFilter',
+          'containerId': 'control4',
+          'options': {
+            'filterColumnLabel' : 'Month',
+            'ui': {
+              'labelStacking': 'horizontal',
+              'allowTyping': true,
+              'allowMultiple': false
+            }
+          },
+          'state': { 'selectedValues': defaultMonth }
+        });
+
+        var weekPicker2 = new google.visualization.ControlWrapper({
+          'controlType': 'CategoryFilter',
+          'containerId': 'control5',
+          'options': {
+            'filterColumnLabel' : 'Week',
+            'ui': {
+              'labelStacking': 'horizontal',
+              'allowTyping': true,
+              'allowMultiple': false
+            }
+          },
+          'state': { 'selectedValues': defaultWeek }
+        });
+
+        var chart2 = new google.visualization.ChartWrapper({
+          'chartType': 'ColumnChart',
+          'containerId': 'chart_div2',
+          'options': {
+            'height': 600,
+            'isStacked': true,
+            'vAxis': {title: "Percentage Used(Time)", maxValue: 100, minValue: 0},
+            'hAxis': {title: "Week Day"}
+          }        
+        });
+
+        var dashboard2 = new google.visualization.Dashboard(document.getElementById('dashboard2'));
+                        
+        dashboard2.bind([systemPicker2, monthPicker2, weekPicker2], chart2).draw(data2);
+
+      }
+
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+        <h1>Palladium Daily/Weekly Usage By Designs</h1>
+        <div id='dateInfo'> </div>
+  	<script type="text/javascript">
+  		var str1 = "<h2>Date: " + dateStr + "</h2>";
+  		var str2 = "<h3>System Info: " + machineList + "</h3>";
+		document.getElementById('dateInfo').innerHTML = str1 + " " + str2;
+	</script>
+        <div id="dashboard"></div>
+        <div id="control1"></div>
+        <h5>   </h5>
+        <div id="control2"></div>
+        <div id="chart_div"></div>
+        <h5>   </h5> <h5>   </h5>
+        <div id="dashboard2"></div>
+        <div id="control3"></div>
+        <h5>   </h5>
+        <div id="control4"></div>
+        <h5>   </h5>
+        <div id="control5"></div>
+        <h5>   </h5>
+        <div id="chart_div2"></div>
+	<h1><a href="main.html">Main Page</a></h1>
+  </body>
+</html>
